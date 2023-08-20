@@ -1,4 +1,9 @@
 <!-- <app-alert message="hello"></app-alert> -->
 
 <div [innerHTML]="sanitizedHTML"></div>
-<input [(ngModel)]="content" (input)="updateSanitizedHTML()" />
+<textarea
+  [(ngModel)]="content"
+  (input)="updateSanitizedHTML()"
+  rows="4"
+  cols="50"
+></textarea>

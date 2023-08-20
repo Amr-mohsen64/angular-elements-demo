@@ -32,10 +32,10 @@ export class AppComponent implements OnInit {
     });
     customElements.define('amr-alert', alertElement);
 
-    // setTimeout(() => {
-    //   this.sanitizedHTML = this.domSanitizer.bypassSecurityTrustHtml(
-    //     '<amr-alert message="renderd dianmically"></amr-alert>'
-    //   );
-    // }, 2000);
+    setTimeout(() => {
+      this.sanitizedHTML = this.domSanitizer.bypassSecurityTrustHtml(
+        '<amr-alert class="amr" message="renderd dianmically"></amr-alert>'
+      );
+    }, 2000);
   }
 }
