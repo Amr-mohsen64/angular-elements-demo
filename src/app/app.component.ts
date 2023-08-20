@@ -1,4 +1,4 @@
-import { Component, Injector } from '@angular/core';
+import { Component, Injector, OnInit } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { createCustomElement } from '@angular/elements';
 import { AlertComponent } from './alert/alert.component';
@@ -8,18 +8,34 @@ import { AlertComponent } from './alert/alert.component';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
-export class AppComponent {
-  content!: string | SafeHtml;
+export class AppComponent implements OnInit {
+  content: any = '';
+  sanitizedHTML: any = '';
 
-  constructor(injector: Injector, domSanitizer: DomSanitizer) {
+  constructor(private injector: Injector, private domSanitizer: DomSanitizer) {}
+
+  ngOnInit(): void {
+    this.initlizeCustomeElement();
+  }
+
+  updateSanitizedHTML() {
+    this.sanitizedHTML = this.sanitizeHTML(this.content);
+  }
+
+  private sanitizeHTML(html: string): any {
+    return this.domSanitizer.bypassSecurityTrustHtml(html);
+  }
+
+  initlizeCustomeElement() {
     const alertElement = createCustomElement(AlertComponent, {
-      injector: injector,
+      injector: this.injector,
     });
     customElements.define('amr-alert', alertElement);
-    setTimeout(() => {
-      this.content = domSanitizer.bypassSecurityTrustHtml(
-        '<amr-alert message="renderd dianmically"></amr-alert>'
-      );
-    }, 2000);
+
+    // setTimeout(() => {
+    //   this.sanitizedHTML = this.domSanitizer.bypassSecurityTrustHtml(
+    //     '<amr-alert message="renderd dianmically"></amr-alert>'
+    //   );
+    // }, 2000);
   }
 }

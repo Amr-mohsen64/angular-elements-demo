@@ -1,3 +1,4 @@
 <!-- <app-alert message="hello"></app-alert> -->
 
-<div [innerHTML]="content"></div>
+<div [innerHTML]="sanitizedHTML"></div>
+<input [(ngModel)]="content" (input)="updateSanitizedHTML()" />
